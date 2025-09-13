@@ -1,3 +1,4 @@
+/* 
 // Node class
 class Node {
     int data;
@@ -230,3 +231,4 @@ public class Singly{
         list.printList(); // 30 -> 20 -> null
     }
 }
+    */
