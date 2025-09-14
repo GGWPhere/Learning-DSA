@@ -149,11 +149,11 @@ class DoublyLinkedList{
     }
 
     //search feature (return the index of the first node whose data equals 'value')
-    public int findFirst(int value){
+    public int findFirst(int data){
         Node current = head;
         int index = 0;
         while(current != null){
-            if (current.data == value){
+            if (current.data == data){
                 return index; //found
             }
             current = current.next;
@@ -163,15 +163,15 @@ class DoublyLinkedList{
     }
 
     //quick boolean search
-    public boolean contains(int value){
-        return findFirst(value) != 1;
+    public boolean contains(int data){
+        return findFirst(data) != 1;
     }
     
     //sorted insertion
-    void sortedInsert(int value) {
-    Node newNode = new Node(value);
+    void sortedInsert(int data) {
+    Node newNode = new Node(data);
     //empty list or value is smallest
-    if (head == null || head.data >= value) {
+    if (head == null || head.data >= data) {
         newNode.next = head;
         if (head != null) head.prev = newNode;
         head = newNode;
@@ -179,7 +179,7 @@ class DoublyLinkedList{
     }
     Node current = head;
     // Move forward until we find a node whose data is >= value
-    while (current.next != null && current.next.data < value) {
+    while (current.next != null && current.next.data < data) {
         current = current.next;
     }
     // Insert after 'current'
@@ -193,12 +193,60 @@ class DoublyLinkedList{
     }
 
     //implement merge
+    static DoublyLinkedList mergeSorted(DoublyLinkedList a, DoublyLinkedList b) {
+        Node head1 = a.head;
+        Node head2 = b.head;
 
+        DoublyLinkedList result = new DoublyLinkedList();
+        Node tail = null; // last node in the merged list
+
+        // While both lists have nodes
+        while (head1 != null && head2 != null) {
+            Node nodeToAdd;
+
+            if (head1.data <= head2.data) {
+                nodeToAdd = head1;
+                head1 = head1.next;
+            } else {
+                nodeToAdd = head2;
+                head2 = head2.next;
+            }
+
+            nodeToAdd.prev = tail;    // connect back
+            nodeToAdd.next = null;    // detach from old list’s next (will reconnect)
+
+            if (tail == null) {        // first node
+                result.head = nodeToAdd;
+            } else {
+                tail.next = nodeToAdd;
+            }
+            tail = nodeToAdd;
+        }
+
+        // Append remaining nodes from whichever list is not empty
+        Node remaining = (head1 != null) ? head1 : head2;
+        while (remaining != null) {
+            Node nodeToAdd = remaining;
+            remaining = remaining.next;
+
+            nodeToAdd.prev = tail;
+            nodeToAdd.next = null;
+
+            if (tail == null) {
+                result.head = nodeToAdd;
+            } else {
+                tail.next = nodeToAdd;
+            }
+            tail = nodeToAdd;
+        }
+
+        return result;
+    }
 }
 
 public class Doubly{
     public static void main(String[] args) {
-        DoublyLinkedList list = new DoublyLinkedList();
+       // DoublyLinkedList list = new DoublyLinkedList();
        /*  list.insertAtHead(10);
         list.insertAtHead(20);
         list.insertAtHead(30);
@@ -230,12 +278,34 @@ public class Doubly{
         list.printForward();
         */
 
-        list.sortedInsert(30);
+        /*list.sortedInsert(30);
         list.sortedInsert(10);
         list.sortedInsert(40);
         list.sortedInsert(20);
         list.sortedInsert(25);
         System.out.println("List after sorted insert: ");
         list.printForward();
+        */
+
+        DoublyLinkedList listA = new DoublyLinkedList();
+        listA.sortedInsert(10);
+        listA.sortedInsert(20);
+        listA.sortedInsert(40);
+
+        DoublyLinkedList listB = new DoublyLinkedList();
+        listB.sortedInsert(15);
+        listB.sortedInsert(25);
+        listB.sortedInsert(30);
+        listB.sortedInsert(50);
+
+        System.out.println("List A:");
+        listA.printForward();
+
+        System.out.println("List B:");
+        listB.printForward();
+
+        DoublyLinkedList merged = DoublyLinkedList.mergeSorted(listA, listB);
+        System.out.println("Merged List:");
+        merged.printForward();
     }
 }
