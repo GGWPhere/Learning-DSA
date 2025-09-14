@@ -1,3 +1,4 @@
+/* 
 class Node{
     int data;
     Node next;
@@ -286,7 +287,7 @@ public class Doubly{
         System.out.println("List after sorted insert: ");
         list.printForward();
         */
-
+/* 
         DoublyLinkedList listA = new DoublyLinkedList();
         listA.sortedInsert(10);
         listA.sortedInsert(20);
@@ -309,3 +310,4 @@ public class Doubly{
         merged.printForward();
     }
 }
+*/
