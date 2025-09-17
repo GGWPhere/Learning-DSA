@@ -1,3 +1,4 @@
+/*
 import java.util.*;
 // Generic array-based stack with automatic resizing <E> "helps for it to work with any type"
 class StackArray<E> {
@@ -220,7 +221,7 @@ public class BTS_Stack {
         }
         */
 
-
+/* 
         // Next exercises you can try:
         // - infixToPostfix conversion
         // - evaluate postfix expression
@@ -242,4 +243,4 @@ public class BTS_Stack {
         }
     }
 }
-
+*/
