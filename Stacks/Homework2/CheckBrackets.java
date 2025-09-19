@@ -10,3 +10,55 @@
  * but because we process left to right, the first unmatched opening bracket is the top of stack after scanning, 
  * since we push in order and never pop it if it is unmatched).
  */
+import java.util.*;
+
+public class CheckBrackets {
+    static class Bracket {
+        char type;
+        int position; // 1-based
+        Bracket(char type, int position) {
+            this.type = type;
+            this.position = position;
+        }
+        boolean matches(char closing) {
+            return (type == '(' && closing == ')') ||
+                   (type == '[' && closing == ']') ||
+                   (type == '{' && closing == '}');
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String text = sc.nextLine();
+        Deque<Bracket> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            int position = i + 1; // 1-based index
+
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(new Bracket(ch, position));
+            }
+            else if (ch == ')' || ch == ']' || ch == '}') {
+                if (stack.isEmpty()) {
+                    // first unmatched closing bracket
+                    System.out.println(position);
+                    return;
+                }
+                Bracket top = stack.pop();
+                if (!top.matches(ch)) {
+                    // mismatched closing bracket
+                    System.out.println(position);
+                    return;
+                }
+            }
+        }
+
+        // if there are unmatched opening brackets
+        if (!stack.isEmpty()) {
+            System.out.println(stack.peek().position);
+        } else {
+            System.out.println("Success");
+        }
+    }
+}
