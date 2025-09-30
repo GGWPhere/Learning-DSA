@@ -62,6 +62,7 @@ public class MinHeap{
         return root;
     }
 
+    //sift down
     private void heapifyDown(int i) {
         int smallest = i;
         int l = left(i);
