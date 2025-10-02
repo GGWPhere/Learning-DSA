@@ -20,7 +20,6 @@
  *  -If smaller than child, swap and continue down.
  */
 //Build HeapStart: from last non-leaf node and heapify down each node
- 
 
 public class MaxHeap {
     private int[] heap;
